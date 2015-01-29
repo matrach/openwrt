@@ -88,6 +88,7 @@ platform_check_image() {
 	ur-336un |\
 	v22rw-2x2 | \
 	vocore | \
+	olinuxino-rt5350f | \
 	w150m | \
 	w306r-v20 |\
 	w502u |\
