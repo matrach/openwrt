@@ -1,0 +1,16 @@
+#!/bin/sh /etc/rc.common
+ 
+START=99
+STOP=99
+  
+start() {
+    echo 12 > /sys/class/gpio/export 
+    echo out > /sys/class/gpio/gpio12/direction
+     echo 14 > /sys/class/gpio/export 
+    echo out > /sys/class/gpio/gpio14/direction
+	
+}                 
+                   
+stop() {
+    echo > /dev/null
+}

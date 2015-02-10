@@ -1,0 +1,135 @@
+/dts-v1/;
+
+/include/ "rt5350.dtsi"
+
+/ {
+	compatible = "RT5350F-OLINUXINO", "ralink,rt5350-soc";
+	model = "RT5350F-OLinuXino";
+
+	palmbus@10000000 {
+			 gpio1: gpio@660 {
+                        status = "okay";
+                };
+
+
+		spi@b00 {
+			status = "okay";
+			m25p80@0 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				compatible = "s25fl064k";
+				reg = <0 0>;
+				linux,modalias = "m25p80", "s25fl064k";
+				spi-max-frequency = <10000000>;
+
+				partition@0 {
+					label = "u-boot";
+					reg = <0x0 0x30000>;
+					read-only;
+				};
+
+				partition@30000 {
+					label = "u-boot-env";
+					reg = <0x30000 0x10000>;
+					read-only;
+				};
+
+				factory: partition@40000 {
+					label = "factory";
+					reg = <0x40000 0x10000>;
+					read-only;
+				};
+
+				partition@50000 {
+					label = "firmware";
+					reg = <0x50000 0x3b0000>;
+				};
+			};
+	
+			 spidev@1 {
+                                compatible = "linux,spidev";
+                                spi-max-frequency = <10000000>;
+                                reg = <1>;
+                        };
+	
+		};
+	};
+
+
+	pinctrl {
+		state_default: pinctrl0 {
+
+
+			gpio {
+				ralink,group = "jtag","uartf";
+				ralink,function = "gpio";
+				output-low;
+			};
+		
+			 phy_led {
+                                ralink,group = "led";
+                                ralink,function = "led";
+                        };
+			
+
+
+		};
+	};
+
+	i2c@900 {
+                        status = "okay";
+                };
+
+	  ethernet@10100000 {
+                mtd-mac-address = <&factory 0x4>;
+                ralink,port-map = "wllll";
+        };
+
+	esw@10110000 {
+		ralink,portmap = <0x2f>;
+	};
+
+
+	wmac@10180000 {
+		status = "okay";
+		ralink,mtd-eeprom = <&factory 0>;
+		ralink,led-polarity = <1>;
+	};
+
+	ehci@101c0000 {
+		status = "okay";
+	};
+
+	ohci@101c1000 {
+		status = "okay";
+	};
+	gpio-export {
+                compatible = "gpio-export";
+                #size-cells = <0>;
+
+                gpio12 {
+                        /* UARTF_DCD_N */
+                        gpio-export,name = "gpio12";
+                        gpio-export,direction_may_change = <1>;
+                        gpios = <&gpio0 12 0>;
+                };
+                gpio14 {
+                        /* UARTF_RIN */
+                        gpio-export,name = "gpio14";
+                        gpio-export,direction_may_change = <1>;
+                        gpios = <&gpio0 14 0>;
+		};
+	};
+	gpio-keys-polled {
+		compatible = "gpio-keys-polled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <20>;
+		wps {
+			label = "reset";
+			gpios = <&gpio0 0 1>;
+			linux,code = <0x198>;
+		};
+	};
+
+};

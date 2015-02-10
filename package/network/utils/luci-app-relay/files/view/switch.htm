@@ -1,0 +1,41 @@
+<%+header%>
+<h2><a id="content" name="content"><%:Switch%></a></h2>
+<p><%:Switches relay state%></p>
+<center>
+<%- if  rstate  then -%> 
+
+Relay 1 On                                                            
+<%- end -%> 
+
+<%- if not rstate   then -%>
+<form name="input" action="<%=controller%>/relay/switch" method="get">
+    <input type="hidden" name="rstate" value="1" />
+    <input type="submit" value="<%:Relay1 On%>" style="font-size:10px;width:20%;height:30%" />
+</form> 
+<p />
+<form name="input" action="<%=controller%>/relay/switch" method="get">
+    <input type="hidden" name="rstate" value="0" />
+    <input type="submit" value="<%:Relay1 Off%>" style="font-size:10px;width:20%;height:30%" />
+</form> 
+
+<%- end -%>
+
+<%- if not rstate1 then -%>
+
+<form name="input" action="<%=controller%>/relay/switch" method="get">
+    <input type="hidden" name="rstate1" value="1" />
+    <input type="submit" value="<%:Relay2 On%>" style="font-size:10px;width:20%;height:30%" />
+</form>
+<p />
+<form name="input" action="<%=controller%>/relay/switch" method="get">
+    <input type="hidden" name="rstate1" value="0" />
+    <input type="submit" value="<%:Relay2 Off%>" style="font-size:10px;width:20%;height:30%" />
+</form>
+<%- else -%>
+<p style="font-size:80px"><%:Please wait - switching relay...%></p>
+<script type="text/javascript">setTimeout("location='<%=controller%>/relay/switch'", 5000)</script>
+
+<%- end -%>
+</center>
+<%+footer%>
+
