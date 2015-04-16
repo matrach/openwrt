@@ -95,7 +95,8 @@ get_status_led() {
 	hiwifi-hc6361)
 		status_led="hiwifi:blue:system"
 		;;
-	hornet-ub)
+	hornet-ub | \
+	hornet-ub-x2)
 		status_led="alfa:blue:wps"
 		;;
 	ja76pf | \
@@ -104,6 +105,9 @@ get_status_led() {
 		;;
 	ls-sr71)
 		status_led="ubnt:green:d22"
+		;;
+	mc-mac1200r)
+		status_led="mercury:green:system"
 		;;
 	mr600)
 		status_led="mr600:orange:power"
@@ -130,7 +134,7 @@ get_status_led() {
 		status_led="nbg460n:green:power"
 		;;
 	nbg6716)
-		status_led="nbg6716:white:power"
+		status_led="zyxel:white:power"
 		;;
 	om2p | \
 	om2pv2 | \
@@ -139,7 +143,8 @@ get_status_led() {
 	om2p-lc)
 		status_led="om2p:blue:power"
 		;;
-	om5p)
+	om5p | \
+	om5p-an)
 		status_led="om5p:blue:power"
 		;;
 	pb44)
@@ -157,6 +162,7 @@ get_status_led() {
 		status_led="rb750:green:act"
 		;;
 	rb-911g-2hpnd|\
+	rb-911g-5hpacd|\
 	rb-911g-5hpnd|\
 	rb-912uag-2hpnd|\
 	rb-912uag-5hpnd)
@@ -226,13 +232,15 @@ get_status_led() {
 	tl-wr841n-v8 | \
 	tl-wa830re-v2 | \
 	tl-wr842n-v2 | \
-	tl-wr941nd)
+	tl-wr941nd | \
+	tl-wr941nd-v5)
 		status_led="tp-link:green:system"
 		;;
 	archer-c5 | \
 	archer-c7 | \
 	tl-wdr4900-v2 | \
 	tl-mr10u | \
+	tl-mr12u | \
 	tl-mr13u | \
 	tl-wdr4300 | \
 	tl-wr703n | \
@@ -281,11 +289,15 @@ get_status_led() {
 	wndr4300 | \
 	wnr2000 | \
 	wnr2200 |\
-	wnr612-v2)
+	wnr612-v2 |\
+	wnr1000-v2)
 		status_led="netgear:green:power"
 		;;
 	wp543)
 		status_led="wp543:green:diag"
+		;;
+	wpj558)
+		status_led="wpj558:green:sig3"
 		;;
 	wrt400n)
 		status_led="wrt400n:blue:wps"

@@ -202,6 +202,9 @@ ramips_board_detect() {
 	*"Planex MZK-750DHP")
 		name="mzk-750dhp"
 		;;
+	*"Microduino MicroWRT")
+		name="microwrt"
+		;;
 	*"NBG-419N")
 		name="nbg-419n"
 		;;
@@ -371,6 +374,9 @@ ramips_board_detect() {
 	*"Wansview NCS601W")
 		name="ncs601w"
 		;;
+	*"Xiaomi MiWiFi Mini")
+		name="xiaomi-miwifi-mini"
+		;;
 	*"Sercomm NA930")
 		name="na930"
 		;;
@@ -379,6 +385,9 @@ ramips_board_detect() {
 		;;
 	*"ZBT WR8305RT")
 		name="wr8305rt"
+		;;
+	*"ZTE Q7")
+		name="zte-q7"
 		;;
 	*"Lenovo Y1")
 		name="y1"

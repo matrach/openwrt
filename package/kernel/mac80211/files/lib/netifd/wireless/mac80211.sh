@@ -42,7 +42,6 @@ drv_mac80211_init_device_config() {
 		greenfield \
 		short_gi_20 \
 		short_gi_40 \
-		smps \
 		max_amsdu \
 		dsss_cck_40
 }
@@ -56,6 +55,7 @@ drv_mac80211_init_iface_config() {
 	config_add_int maxassoc
 	config_add_int max_listen_int
 	config_add_int dtim_period
+	config_add_int start_disabled
 
 	# mesh
 	config_add_string mesh_id
@@ -132,7 +132,6 @@ mac80211_hostapd_setup_base() {
 			greenfield:0 \
 			short_gi_20:1 \
 			short_gi_40:1 \
-			smps:1 \
 			tx_stbc:1 \
 			rx_stbc:3 \
 			max_amsdu:1 \
@@ -142,8 +141,6 @@ mac80211_hostapd_setup_base() {
 		for cap in $(iw phy "$phy" info | grep 'Capabilities:' | cut -d: -f2); do
 			ht_cap_mask="$(($ht_cap_mask | $cap))"
 		done
-
-		cap_smps=$((($ht_cap_mask >> 2) & 3))
 
 		cap_rx_stbc=$((($ht_cap_mask >> 8) & 3))
 		[ "$rx_stbc" -lt "$cap_rx_stbc" ] && cap_rx_stbc="$rx_stbc"
@@ -160,10 +157,6 @@ mac80211_hostapd_setup_base() {
 			RX-STBC123:0x300:0x300:1 \
 			MAX-AMSDU-7935:0x800::$max_amsdu \
 			DSSS_CCK-40:0x1000::$dsss_cck_40
-
-		# SM Power Save: 0=static, 1=dynamic, 3=disabled
-		[ "$smps" = 1 -a "$cap_smps" = 0 ] && ht_capab_flags="$ht_capab_flags[SMPS-STATIC]"
-		[ "$smps" = 1 -a "$cap_smps" = 1 ] && ht_capab_flags="$ht_capab_flags[SMPS-DYNAMIC]"
 
 		ht_capab="$ht_capab$ht_capab_flags"
 		[ -n "$ht_capab" ] && append base_cfg "ht_capab=$ht_capab" "$N"
@@ -322,12 +315,13 @@ mac80211_hostapd_setup_bss() {
 	append hostapd_cfg "$type=$ifname" "$N"
 
 	hostapd_set_bss_options hostapd_cfg "$vif" || return 1
-	json_get_vars wds dtim_period max_listen_int
+	json_get_vars wds dtim_period max_listen_int start_disabled
 
 	set_default wds 0
+	set_default start_disabled 0
 
 	[ "$wds" -gt 0 ] && append hostapd_cfg "wds_sta=1" "$N"
-	[ "$staidx" -gt 0 ] && append hostapd_cfg "start_disabled=1" "$N"
+	[ "$staidx" -gt 0 -o "$start_disabled" -eq 1 ] && append hostapd_cfg "start_disabled=1" "$N"
 
 	cat >> /var/run/hostapd-$phy.conf <<EOF
 $hostapd_cfg

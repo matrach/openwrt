@@ -56,13 +56,13 @@ static void rt3883_init_data(struct fe_soc_data *data,
 }
 
 static struct fe_soc_data rt3883_data = {
-	.mac = { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55 },
 	.init_data = rt3883_init_data,
 	.reset_fe = rt3883_fe_reset,
 	.fwd_config = rt3883_fwd_config,
 	.pdma_glo_cfg = FE_PDMA_SIZE_8DWORDS,
 	.rx_int = FE_RX_DONE_INT,
 	.tx_int = FE_TX_DONE_INT,
+	.status_int = FE_CNT_GDM_AF,
 	.checksum_bit = RX_DMA_L4VALID,
 	.mdio_read = rt2880_mdio_read,
 	.mdio_write = rt2880_mdio_write,

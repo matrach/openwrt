@@ -7,6 +7,7 @@
 	model = "Firefly FireWRT";
 
 	memory@0 {
+		device_type = "memory";
 		reg = <0x0 0x10000000>;
 	};
 
@@ -25,7 +26,7 @@
 			m25p80@0 {
 				#address-cells = <1>;
 				#size-cells = <1>;
-				compatible = "mx25l12805d";
+				compatible = "w25q128";
 				reg = <0 0>;
 				linux,modalias = "m25p80";
 				spi-max-frequency = <10000000>;
@@ -50,7 +51,7 @@
 
 				partition@50000 {
 					label = "firmware";
-					reg = <0x50000 0x7b0000>;
+					reg = <0x50000 0xfb0000>;
 				};
 
 			};
@@ -75,6 +76,45 @@
 				device_type = "pci";
 				mediatek,mtd-eeprom = <&factory 0x0000>;
 				mediatek,5ghz = <0>;
+			};
+		};
+	};
+
+	ethernet@1e100000 {
+		mtd-mac-address = <&factory 0xe000>;
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+
+		power {
+			label = "firewrt:green:power";
+			gpios = <&gpio0 22 1>;
+		};
+	};
+
+	gpio-keys-polled {
+		compatible = "gpio-keys-polled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <20>;
+		wps {
+			label = "wps";
+			gpios = <&gpio0 18 1>;
+			linux,code = <0x211>;
+		};
+		power {
+			label = "power";
+			gpios = <&gpio0 23 1>;
+			linux,code = <116>;
+		};
+	};
+
+	pinctrl {
+		state_default: pinctrl0 {
+		gpio {
+				ralink,group = "wdt", "rgmii2";
+				ralink,function = "gpio";
 			};
 		};
 	};

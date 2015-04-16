@@ -395,6 +395,8 @@ Image/Build/Profile/V11STFE=$(call BuildFirmware/Default4M/$(1),$(1),v11st-fe,V1
 
 Image/Build/Profile/WLITX4AG300N=$(call BuildFirmware/Default4M/$(1),$(1),wli-tx4-ag300n,WLI-TX4-AG300N)
 
+Image/Build/Profile/WZRAGL300NH=$(call BuildFirmware/Default4M/$(1),$(1),wzr-agl300nh,WZR-AGL300NH)
+
 ifeq ($(SUBTARGET),rt288x)
 define Image/Build/Profile/Default
 	$(call Image/Build/Profile/AR670W,$(1))
@@ -403,6 +405,7 @@ define Image/Build/Profile/Default
 	$(call Image/Build/Profile/RTN15,$(1))
 	$(call Image/Build/Profile/V11STFE,$(1))
 	$(call Image/Build/Profile/WLITX4AG300N,$(1))
+	$(call Image/Build/Profile/WZRAGL300NH,$(1))
 endef
 endif
 
@@ -861,8 +864,12 @@ Image/Build/Profile/RT-N14U=$(call BuildFirmware/Default8M/$(1),$(1),rt-n14u,RT-
 Image/Build/Profile/WR8305RT=$(call BuildFirmware/Default8M/$(1),$(1),wr8305rt,WR8305RT)
 Image/Build/Profile/WRTNODE=$(call BuildFirmware/Default16M/$(1),$(1),wrtnode,WRTNODE)
 Image/Build/Profile/WT3020=$(call BuildFirmware/PorayDualSize/$(1),$(1),wt3020,WT3020)
+Image/Build/Profile/XIAOMI-MIWIFI-MINI=$(call BuildFirmware/Default16M/$(1),$(1),xiaomi-miwifi-mini,XIAOMI-MIWIFI-MINI)
+Image/Build/Profile/ZTE-Q7=$(call BuildFirmware/Default8M/$(1),$(1),zte-q7,ZTE-Q7)
 Image/Build/Profile/ZBT-WA05=$(call BuildFirmware/Default8M/$(1),$(1),zbt-wa05,ZBT-WA05)
 Image/Build/Profile/ArcherC20i=$(call BuildFirmware/Tplink/$(1),$(1),ArcherC20i,ArcherC20i)
+microwrt_mtd_size=16515072
+Image/Build/Profile/MicroWRT=$(call BuildFirmware/CustomFlash/$(1),$(1),microwrt,MicroWRT,$(microwrt_mtd_size))
 
 
 ifeq ($(SUBTARGET),mt7620)
@@ -889,8 +896,11 @@ define Image/Build/Profile/Default
 	$(call Image/Build/Profile/WR8305RT,$(1))
 	$(call Image/Build/Profile/WRTNODE,$(1))
 	$(call Image/Build/Profile/WT3020,$(1))
+	$(call Image/Build/Profile/XIAOMI-MIWIFI-MINI,$(1))
+	$(call Image/Build/Profile/ZTE-Q7,$(1))
 	$(call Image/Build/Profile/ZBT-WA05,$(1))
 	$(call Image/Build/Profile/ArcherC20i,$(1))
+	$(call Image/Build/Profile/MicroWRT,$(1))
 endef
 endif
 
@@ -933,7 +943,7 @@ endef
 
 define Device/firewrt
   DTS := FIREWRT
-  IMAGE_SIZE := $(ralink_default_fw_size_8M)
+  IMAGE_SIZE := $(ralink_default_fw_size_16M)
 endef
 
 #
@@ -979,7 +989,7 @@ endif
 ifeq ($(SUBTARGET),mt7621)
 define Build/Compile
 	rm -rf $(KDIR)/relocate
-	$(CP) ./relocate $(KDIR)
+	$(CP) ../../generic/image/relocate $(KDIR)
 	$(MAKE) -C $(KDIR)/relocate KERNEL_ADDR=$(KERNEL_LOADADDR) CROSS_COMPILE=$(TARGET_CROSS)
 endef
 endif

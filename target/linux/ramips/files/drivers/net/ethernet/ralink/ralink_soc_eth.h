@@ -25,6 +25,12 @@
 #include <linux/dma-mapping.h>
 #include <linux/phy.h>
 #include <linux/ethtool.h>
+#include <linux/version.h>
+
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,15,0)
+#define u64_stats_fetch_retry_irq u64_stats_fetch_retry_bh
+#define u64_stats_fetch_begin_irq u64_stats_fetch_begin_bh
+#endif
 
 enum fe_reg {
 	FE_REG_PDMA_GLO_CFG = 0,
@@ -43,6 +49,7 @@ enum fe_reg {
 	FE_REG_FE_DMA_VID_BASE,
 	FE_REG_FE_COUNTER_BASE,
 	FE_REG_FE_RST_GL,
+	FE_REG_FE_INT_STATUS2,
 	FE_REG_COUNT
 };
 
@@ -54,11 +61,7 @@ enum fe_work_flag {
 #define FE_DRV_VERSION		"0.1.2"
 
 /* power of 2 to let NEXT_TX_DESP_IDX work */
-#ifdef CONFIG_SOC_MT7621
-#define NUM_DMA_DESC		(1 << 9)
-#else
 #define NUM_DMA_DESC		(1 << 7)
-#endif
 #define MAX_DMA_DESC		0xfff
 
 #define FE_DELAY_EN_INT		0x80
@@ -379,8 +382,7 @@ struct fe_phy {
 
 struct fe_soc_data
 {
-	unsigned char mac[6];
-	const u32 *reg_table;
+	const u16 *reg_table;
 
 	void (*init_data)(struct fe_soc_data *data, struct net_device *netdev);
 	void (*reset_fe)(void);
@@ -401,6 +403,7 @@ struct fe_soc_data
 	u32 pdma_glo_cfg;
 	u32 rx_int;
 	u32 tx_int;
+	u32 status_int;
 	u32 checksum_bit;
 };
 
@@ -486,6 +489,8 @@ struct fe_priv
 	unsigned long			vlan_map;
 	struct work_struct		pending_work;
 	DECLARE_BITMAP(pending_flags, FE_FLAG_MAX);
+	u16				tx_ring_size;
+	u16				rx_ring_size;
 };
 
 extern const struct of_device_id of_fe_match[];
