@@ -3,8 +3,8 @@
 /include/ "rt5350.dtsi"
 
 / {
-	compatible = "MPRA1", "ralink,rt5350-soc";
-	model = "HAME MPR-A1";
+	compatible = "RT5350F-OLINUXINO", "ralink,rt5350-soc";
+	model = "RT5350F-OLINUXINO";
 
 	palmbus@10000000 {
 		spi@b00 {
@@ -49,7 +49,7 @@
 	pinctrl {
 		state_default: pinctrl0 {
 			gpio {
-				ralink,group = "i2c", "jtag", "rgmii", "mdio", "uartf", "led";
+				ralink,group = "jtag", "rgmii", "mdio", "uartf";
 				ralink,function = "gpio";
 			};
 		};
@@ -61,6 +61,7 @@
 
 	esw@10110000 {
 		ralink,portmap = <0x2f>;
+		ralink,led_polarity = <0x17>;
 	};
 
 	wmac@10180000 {
@@ -73,18 +74,6 @@
 
 	ohci@101c1000 {
 		status = "okay";
-	};
-
-	gpio-leds {
-		compatible = "gpio-leds";
-		system {
-			label = "hame:blue:system";
-			gpios = <&gpio0 20 1>;
-		};
-		power {
-			label = "hame:red:power";
-			gpios = <&gpio0 17 1>;
-		};
 	};
 
 	gpio-keys-polled {
@@ -108,6 +97,19 @@
 			gpio-export,output = <1>;
 			gpios = <&gpio0 7 0>;
 		};
+
+		relay1 {
+			gpio-export,name = "gpio12";
+			gpio-export,output = <1>;
+			gpios = <&gpio0 12 0>;
+		};
+
+		relay2 {
+			gpio-export,name = "gpio14";
+			gpio-export,output = <1>;
+			gpios = <&gpio0 14 0>;
+		};
+
 		root_hub {
 			gpio-export,name = "root_hub";
 			gpio-export,output = <1>;
