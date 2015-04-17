@@ -1,5 +1,5 @@
 config system
-	option hostname	OpenWrt
+	option hostname	RT5350F-OLinuXino
 	option timezone	UTC
 
 config timeserver ntp
