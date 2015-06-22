@@ -612,7 +612,7 @@ Image/Build/Profile/WCR150GN=$(call BuildFirmware/Default4M/$(1),$(1),wcr150gn,W
 buffalo_whrg300n_mtd_size=3801088
 define BuildFirmware/WHRG300N/squashfs
 	$(call BuildFirmware/Default4M/$(1),$(1),whr-g300n,WHR-G300N)
-	# the following line has a bad argument 3 ... the old Makefile was already broken	
+	# the following line has a bad argument 3 ... the old Makefile was already broken
 	$(call BuildFirmware/Buffalo,$(1),whr-g300n,whr-g300n)
 	if [ -e "$(call sysupname,$(1),$(2))" ]; then \
 		( \
@@ -881,6 +881,7 @@ Image/Build/Profile/ZBT-WA05=$(call BuildFirmware/Default8M/$(1),$(1),zbt-wa05,Z
 Image/Build/Profile/ArcherC20i=$(call BuildFirmware/Tplink/$(1),$(1),ArcherC20i,ArcherC20i)
 microwrt_mtd_size=16515072
 Image/Build/Profile/MicroWRT=$(call BuildFirmware/CustomFlash/$(1),$(1),microwrt,MicroWRT,$(microwrt_mtd_size))
+Image/Build/Profile/OLINUXINO-MT7620N=$(call BuildFirmware/Default16M/$(1),$(1),olinuxino-mt7620n,OLINUXINO-MT7620N)
 
 
 ifeq ($(SUBTARGET),mt7620)
@@ -913,6 +914,7 @@ define Image/Build/Profile/Default
 	$(call Image/Build/Profile/ZBT-WA05,$(1))
 	$(call Image/Build/Profile/ArcherC20i,$(1))
 	$(call Image/Build/Profile/MicroWRT,$(1))
+	$(call Image/Build/Profile/OLINUXINO-MT7620N,$(1))
 endef
 endif
 

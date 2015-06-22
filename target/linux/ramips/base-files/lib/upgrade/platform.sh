@@ -78,6 +78,7 @@ platform_check_image() {
 	omni-plug | \
 	olinuxino-rt5350f | \
 	olinuxino-rt5350f-evb | \
+	olinuxino-mt7620n | \
 	psr-680w | \
 	px4885 | \
 	re6500 | \
