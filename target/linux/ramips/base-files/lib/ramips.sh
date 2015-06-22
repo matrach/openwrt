@@ -253,6 +253,9 @@ ramips_board_detect() {
 	*"OLinuXino-RT5350F-EVB")
 		name="olinuxino-rt5350f-evb"
 		;;
+	*"OLinuXino-RT5350F-DIN")
+		name="olinuxino-rt5350f-din"
+		;;
 	*"OLinuXino-MT7620N")
 		name="olinuxino-mt7620n"
 		;;

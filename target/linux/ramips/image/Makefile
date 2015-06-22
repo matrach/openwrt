@@ -582,6 +582,8 @@ Image/Build/Profile/OLINUXINO-RT5350F=$(call BuildFirmware/Default8M/$(1),$(1),o
 
 Image/Build/Profile/OLINUXINO-RT5350F-EVB=$(call BuildFirmware/Default8M/$(1),$(1),olinuxino-rt5350f-evb,OLINUXINO-RT5350F-EVB)
 
+Image/Build/Profile/OLINUXINO-RT5350F-DIN=$(call BuildFirmware/Default8M/$(1),$(1),olinuxino-rt5350f-din,OLINUXINO-RT5350F-DIN)
+
 Image/Build/Profile/PSR-680W=$(call BuildFirmware/Default4M/$(1),$(1),psr-680w,PSR-680W)
 
 Image/Build/Profile/PWH2004=$(call BuildFirmware/Default8M/$(1),$(1),pwh2004,PWH2004)
@@ -744,6 +746,7 @@ define Image/Build/Profile/Default
 	$(call Image/Build/Profile/OMNI-PLUG,$(1))
 	$(call Image/Build/Profile/OLINUXINO-RT5350F,$(1))
 	$(call Image/Build/Profile/OLINUXINO-RT5350F-EVB,$(1))
+	$(call Image/Build/Profile/OLINUXINO-RT5350F-DIN,$(1))
 	$(call Image/Build/Profile/PSR-680W,$(1))
 	$(call Image/Build/Profile/PWH2004,$(1))
 	$(call Image/Build/Profile/PX4885,$(1))
