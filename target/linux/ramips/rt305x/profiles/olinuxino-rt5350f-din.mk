@@ -10,7 +10,8 @@ define Profile/OLINUXINO-RT5350F-DIN
 	PACKAGES:=\
 		kmod-usb-core kmod-usb-ohci kmod-usb2 \
 		kmod-i2c-core kmod-i2c-ralink \
-		kmod-spi-dev kmod-display
+		kmod-spi-dev kmod-display \
+		i2c-tools
 endef
 
 define Profile/OLINUXINO-RT5350F-DIN/Description
