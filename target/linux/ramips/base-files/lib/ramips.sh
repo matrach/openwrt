@@ -250,11 +250,14 @@ ramips_board_detect() {
 	*"Omnima MiniPlug")
 		name="omni-plug"
 		;;
-	*"OLinuXino-RT5350F")
-		name="olinuxino-rt5350f"
+	*"RT5350F-OLinuXino")
+		name="rt5350f-olinuxino"
 		;;
-	*"OLinuXino-RT5350F-EVB")
+	*"RT5350F-OLinuXino-EVB")
 		name="olinuxino-rt5350f-evb"
+		;;
+	*"RT5350F-OLinuXino-DIN")
+		name="rt5350f-olinuxino-din"
 		;;
 	*"PBR-M1")
 		name="pbr-m1"

@@ -3,8 +3,8 @@
 /include/ "rt5350.dtsi"
 
 / {
-        compatible = "RT5350F-OLINUXINO", "ralink,rt5350-soc";
-        model = "RT5350F-OLINUXINO";
+        compatible = "RT5350F-OLINUXINO-EVB", "ralink,rt5350-soc";
+        model = "RT5350F-OLINUXINO-EVB";
 
         palmbus@10000000 {
                 spi@b00 {
@@ -37,11 +37,15 @@
 
                                 partition@50000 {
                                         label = "firmware";
-                                        reg = <0x50000 0x3b0000>;
+                                        reg = <0x50000 0x7b0000>;
                                 };
                         };
                 };
                 gpio1: gpio@660 {
+                        status = "okay";
+                };
+
+                i2c@900 {
                         status = "okay";
                 };
         };
@@ -76,4 +80,26 @@
                 status = "okay";
         };
 
+        gpio_export {
+                compatible = "gpio-export";
+                #size-cells = <0>;
+
+                relay1 {
+                        gpio-export,name = "gpio12";
+                        gpio-export,output = <0>;
+                        gpios = <&gpio0 12 0>;
+                };
+
+                relay2 {
+                        gpio-export,name = "gpio14";
+                        gpio-export,output = <0>;
+                        gpios = <&gpio0 14 0>;
+                };
+
+                button {
+                        gpio-export,name = "button";
+                        gpios = <&gpio0 0 1>;
+                };
+
+        };
 };

@@ -582,10 +582,6 @@ Image/Build/Profile/OMNI-EMB=$(call BuildFirmware/Default8M/$(1),$(1),omni-emb,O
 
 Image/Build/Profile/OMNI-PLUG=$(call BuildFirmware/Default8M/$(1),$(1),omni-plug,OMNI-PLUG)
 
-Image/Build/Profile/OLINUXINO-RT5350F=$(call BuildFirmware/Default8M/$(1),$(1),olinuxino-rt5350f,OLINUXINO-RT5350F)
-
-Image/Build/Profile/OLINUXINO-RT5350F-EVB=$(call BuildFirmware/Default8M/$(1),$(1),olinuxino-rt5350f-evb,OLINUXINO-RT5350F-EVB)
-
 Image/Build/Profile/PSR-680W=$(call BuildFirmware/Default4M/$(1),$(1),psr-680w,PSR-680W)
 
 Image/Build/Profile/PWH2004=$(call BuildFirmware/Default8M/$(1),$(1),pwh2004,PWH2004)
@@ -595,6 +591,12 @@ Image/Build/Profile/PX4885=$(call BuildFirmware/DefaultDualSize/$(1),$(1),px4885
 Image/Build/Profile/RTG32B1=$(call BuildFirmware/Default4M/$(1),$(1),rt-g32-b1,RT-G32-B1)
 
 Image/Build/Profile/RTN10PLUS=$(call BuildFirmware/Default4M/$(1),$(1),rt-n10-plus,RT-N10-PLUS)
+
+Image/Build/Profile/RT5350F-OLINUXINO=$(call BuildFirmware/Default8M/$(1),$(1),rt5350f-olinuxino,RT5350F-OLINUXINO)
+
+Image/Build/Profile/RT5350F-OLINUXINO-EVB=$(call BuildFirmware/Default8M/$(1),$(1),rt5350f-olinuxino-evb,RT5350F-OLINUXINO-EVB)
+
+Image/Build/Profile/RT5350F-OLINUXINO-DIN=$(call BuildFirmware/Default8M/$(1),$(1),rt5350f-olinuxino-din,RT5350F-OLINUXINO-DIN)
 
 Image/Build/Profile/RUT5XX=$(call BuildFirmware/Default8M/$(1),$(1),rut5xx,RUT5XX)
 
@@ -616,7 +618,7 @@ Image/Build/Profile/WCR150GN=$(call BuildFirmware/Default4M/$(1),$(1),wcr150gn,W
 buffalo_whrg300n_mtd_size=3801088
 define BuildFirmware/WHRG300N/squashfs
 	$(call BuildFirmware/Default4M/$(1),$(1),whr-g300n,WHR-G300N)
-	# the following line has a bad argument 3 ... the old Makefile was already broken	
+	# the following line has a bad argument 3 ... the old Makefile was already broken
 	$(call BuildFirmware/Buffalo,$(1),whr-g300n,whr-g300n)
 	if [ -e "$(call sysupname,$(1),$(2))" ]; then \
 		( \
@@ -748,14 +750,15 @@ define Image/Build/Profile/Default
 	$(call Image/Build/Profile/NW718,$(1))
 	$(call Image/Build/Profile/OMNI-EMB,$(1))
 	$(call Image/Build/Profile/OMNI-PLUG,$(1))
-	$(call Image/Build/Profile/OLINUXINO-RT5350F,$(1))
-	$(call Image/Build/Profile/OLINUXINO-RT5350F-EVB,$(1))
 	$(call Image/Build/Profile/PSR-680W,$(1))
 	$(call Image/Build/Profile/PWH2004,$(1))
 	$(call Image/Build/Profile/PX4885,$(1))
 	$(call Image/Build/Profile/RTG32B1,$(1))
 	$(call Image/Build/Profile/RTN10PLUS,$(1))
 	$(call Image/Build/Profile/RT-N13U,$(1))
+	$(call Image/Build/Profile/RT5350F-OLINUXINO,$(1))
+	$(call Image/Build/Profile/RT5350F-OLINUXINO-EVB,$(1))
+	$(call Image/Build/Profile/RT5350F-OLINUXINO-DIN,$(1))
 	$(call Image/Build/Profile/RUT5XX,$(1))
 	$(call Image/Build/Profile/SL-R7205,$(1))
 	$(call Image/Build/Profile/UR-326N4G,$(1))
