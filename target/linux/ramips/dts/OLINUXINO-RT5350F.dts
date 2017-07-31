@@ -35,6 +35,11 @@
                                         read-only;
                                 };
 
+                                partition@40004 {
+                                        label = "mac-address";
+                                        reg = <0x40004 0x6>;
+                                };
+
                                 partition@50000 {
                                         label = "firmware";
                                         reg = <0x50000 0x7b0000>;
@@ -47,16 +52,35 @@
 
                 i2c@900 {
                         status = "okay";
+
+                        icount@51 {
+                          compatible = "icount-i2c";
+                          reg = <0x51>;
+                        };
                 };
         };
 
         pinctrl {
                 state_default: pinctrl0 {
                         gpio {
-                                ralink,group = "jtag", "rgmii", "mdio", "uartf";
+                                ralink,group = "jtag";
                                 ralink,function = "gpio";
                         };
+		                  	uartf_pins: artf {
+		                  		ralink,group = "uartf";
+		                  		ralink,function = "gpio uartf";
+		                  	};
                 };
+        };
+
+        gpio-leds {
+          compatible = "gpio-leds";
+          led1 {
+            gpios = <&gpio1 5 0>;
+            linux,default-trigger = "none";
+            default-state = "off";
+            panic-indicator;
+          };
         };
 
         ethernet@10100000 {
@@ -79,6 +103,47 @@
 
         ohci@101c1000 {
                 status = "okay";
+        };
+
+        gpio-export {
+          compatible = "gpio-export";
+          #size-cells = <0>;
+
+          vled1 {
+            gpio-export,name = "vled1";
+            gpios = <&gpio0 11 0>;
+          };
+
+          vled2 {
+            gpio-export,name = "vled2";
+            gpios = <&gpio0 13 0>;
+          };
+
+          buf_en {
+            gpio-export,name = "buf_en";
+            gpio-export,output = <0>;
+            gpios = <&gpio0 12 1>;
+          };
+
+          node_backdoor {
+            gpio-export,name = "node_backdoor";
+            gpio-export,output = <1>;
+            gpios = <&gpio0 14 0>;
+          };
+
+          /* openocd sysfsgpio interface cannot handle named gpio.
+          node_reset {
+            gpio-export,name = "node_reset";
+            gpio-export,output = <0>;
+            gpios = <&gpio0 21 0>;
+          };
+          */
+
+          node_power {
+            gpio-export,name = "node_power";
+            gpio-export,output = <0>;
+            gpios = <&gpio0 0 1>;
+          };
         };
 
 };

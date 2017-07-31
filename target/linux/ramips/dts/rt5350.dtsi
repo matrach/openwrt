@@ -77,24 +77,6 @@
 			interrupts = <3>;
 		};
 
-		uart@500 {
-			compatible = "ralink,rt5350-uart", "ralink,rt2880-uart", "ns16550a";
-			reg = <0x500 0x100>;
-
-			resets = <&rstctrl 12>;
-			reset-names = "uart";
-
-			interrupt-parent = <&intc>;
-			interrupts = <5>;
-
-			reg-shift = <2>;
-
-			pinctrl-names = "default";
-			pinctrl-0 = <&uartf_pins>;
-
-			status = "disabled";
-		};
-
 		gpio0: gpio@600 {
 			compatible = "ralink,rt5350-gpio", "ralink,rt2880-gpio";
 			reg = <0x600 0x34>;
@@ -131,7 +113,8 @@
 						10 14 18 1c
 						20 24 ];
 
-			status = "disabled";
+			pinctrl-names = "default";
+			pinctrl-0 = <&phy_led_pins>;
 		};
 
 		i2c@900 {
@@ -182,6 +165,22 @@
 			reg-shift = <2>;
 		};
 
+		uart@500 {
+			compatible = "ralink,rt5350-uart", "ralink,rt2880-uart", "ns16550a";
+			reg = <0x500 0x100>;
+
+			resets = <&rstctrl 12>;
+			reset-names = "uart";
+
+			interrupt-parent = <&intc>;
+			interrupts = <5>;
+
+			reg-shift = <2>;
+
+			pinctrl-names = "default";
+			pinctrl-0 = <&uartf_pins>;
+		};
+
 		systick@d00 {
 			compatible = "ralink,rt5350-systick", "ralink,cevt-systick";
 			reg = <0xd00 0x10>;
@@ -224,16 +223,10 @@
 				ralink,function = "uartlite";
 			};
 		};
-		uartf_pins: uartf {
-			uartf {
-				ralink,group = "uartf";
-				ralink,function = "uartf";
-			};
-		};
 		spi_cs1: spi1 {
 			spi1 {
 				ralink,group = "spi_cs1";
-				ralink,function = "spi_cs1";
+				ralink,function = "gpio";
 			};
 		};
 	};
