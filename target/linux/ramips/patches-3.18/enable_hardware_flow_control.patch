@@ -1,0 +1,17 @@
+Index: linux-3.18.19/drivers/tty/serial/8250/8250_core.c
+===================================================================
+--- linux-3.18.19.orig/drivers/tty/serial/8250/8250_core.c
++++ linux-3.18.19/drivers/tty/serial/8250/8250_core.c
+@@ -2939,9 +2939,10 @@ static void serial8250_config_port(struc
+ 		autoconfig(up, probeflags);
+ 
+ 	/* if access method is AU, it is a 16550 with a quirk */
+-	if (port->type == PORT_16550A && port->iotype == UPIO_AU)
++	/*
++    if (port->type == PORT_16550A && port->iotype == UPIO_AU)
+ 		up->bugs |= UART_BUG_NOMSR;
+-
++	*/
+ 	/* HW bugs may trigger IRQ while IIR == NO_INT */
+ 	if (port->type == PORT_TEGRA)
+ 		up->bugs |= UART_BUG_NOMSR;
