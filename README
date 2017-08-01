@@ -1,35 +1,37 @@
-This is the buildsystem for the OpenWrt Linux distribution.
+This is the buildsystem for the OpenWrt Linux distribution for HENI's CherryMote.
 
-Please use "make menuconfig" to configure your appreciated
-configuration for the toolchain and firmware.
+=========== Preparing work environment and building image ============
 
-You need to have installed gcc, binutils, bzip2, flex, python, perl, make,
-find, grep, diff, unzip, gawk, getopt, subversion, libz-dev and libc headers.
+*Caution, the openwrt directory easily grows to 7-8GB*
 
-Run "./scripts/feeds update -a" to get all the latest package definitions
-defined in feeds.conf / feeds.conf.default respectively
-and "./scripts/feeds install -a" to install symlinks of all of them into
-package/feeds/.
+1. Clone HENI openwrt fork from GitHub
 
-Use "make menuconfig" to configure your image.
+$ git clone https://github.com/heni-project/openwrt.git -b cherrymote
+$ cd openwrt/
 
-Simply running "make" will build your firmware.
-It will download all sources, build the cross-compile toolchain, 
-the kernel and all choosen applications.
+2. Add HENI package feed
 
-You can use "scripts/flashing/flash.sh" for remotely updating your embedded
-system via tftp.
+$ echo "src-link heni </absolute/path/to/heni/repo>/software/supervisor/openwrt-feed" >> feeds.conf.default
 
-The OpenWrt system is documented in docs/. You will need a LaTeX distribution
-and the tex4ht package to build the documentation. Type "make -C docs/" to build it.
+3. Update package definitions and install symlinks
 
-To build your own firmware you need to have access to a Linux, BSD or MacOSX system
-(case-sensitive filesystem required). Cygwin will not be supported because of
-the lack of case sensitiveness in the file system.
+$ ./scripts/feeds update -a
+$ ./scripts/feeds install -a
 
+You might need dependencies:
 
-Sunshine!
-	Your OpenWrt Project
-	http://openwrt.org
+$ sudo apt install gawk zlib1g libncurses5 g++ flex protobuf-c-compiler mercurial subversion libncurses5-dev libssl-dev
 
+4. Build image
 
+$ make
+
+First build involves preparing cross-compiler and other tools and is quite
+lengthy. Subsequent builds should take no more than a few minutes.
+This should create the image in build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_rt305x/openwrt-ramips-rt305x-olinuxino-rt5350f-squashfs-sysupgrade.bin
+
+5. Upload image to the device
+
+Using heni-cli, e.g.:
+
+$ heni supervisor update -d dev:node0 ./image.bin
