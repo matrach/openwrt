@@ -22,7 +22,15 @@ You might need dependencies:
 
 $ sudo apt install gawk zlib1g libncurses5 g++ flex protobuf-c-compiler mercurial subversion libncurses5-dev libssl-dev
 
-4. Build image
+4. Check if our changes to `.config` are overwritten by update, e.g.:
+
+$ git diff | grep watchdog-client
+
+If so, restore previous version from repository:
+
+$ git checkout .config
+
+5. Build image
 
 $ make
 
@@ -30,7 +38,7 @@ First build involves preparing cross-compiler and other tools and is quite
 lengthy. Subsequent builds should take no more than a few minutes.
 This should create the image in build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_rt305x/openwrt-ramips-rt305x-olinuxino-rt5350f-squashfs-sysupgrade.bin
 
-5. Upload image to the device
+6. Upload image to the device
 
 Using heni-cli, e.g.:
 
