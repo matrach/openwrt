@@ -25,6 +25,8 @@ VERSION_NUMBER:=$(if $(VERSION_NUMBER),$(VERSION_NUMBER),15.05)
 
 VERSION_CODE:=$(call qstrip_escape,$(CONFIG_VERSION_NUMBER))
 VERSION_CODE:=$(if $(VERSION_CODE),$(VERSION_CODE),Chaos Calmer)
+VERSION_CODE_LEN:=$(shell echo -n $(VERSION_CODE) | wc -m)
+VERSION_CODE_SPACE:=$(shell expr $(VERSION_CODE_LEN) - 2)
 
 VERSION_NICK:=$(call qstrip_escape,$(CONFIG_VERSION_NICK))
 VERSION_NICK:=$(if $(VERSION_NICK),$(VERSION_NICK),$(RELEASE))
@@ -71,6 +73,7 @@ PKG_CONFIG_DEPENDS += $(foreach taint,$(VERSION_TAINT_SPECS),$(call taint2sym,$(
 VERSION_SED:=$(SED) 's,%U,$(VERSION_REPO),g' \
 	-e 's,%V,$(VERSION_NUMBER),g' \
 	-e 's,%v,\L$(subst $(space),_,$(VERSION_NUMBER)),g' \
+	-e 's,%C \{$(VERSION_CODE_SPACE)\},$(VERSION_CODE),g' \
 	-e 's,%C,$(VERSION_CODE),g' \
 	-e 's,%c,\L$(subst $(space),_,$(VERSION_CODE)),g' \
 	-e 's,%N,$(VERSION_NICK),g' \
