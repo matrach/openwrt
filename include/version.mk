@@ -16,6 +16,7 @@ PKG_CONFIG_DEPENDS += \
 	CONFIG_VERSION_MANUFACTURER \
 	CONFIG_VERSION_PRODUCT \
 	CONFIG_VERSION_HWREV \
+	CONFIG_HENI_IMAGE \
 
 qstrip_escape=$(subst ','\'',$(call qstrip,$(1)))
 #'
@@ -45,6 +46,11 @@ VERSION_PRODUCT:=$(if $(VERSION_PRODUCT),$(VERSION_PRODUCT),Generic)
 
 VERSION_HWREV:=$(call qstrip_escape,$(CONFIG_VERSION_HWREV))
 VERSION_HWREV:=$(if $(VERSION_HWREV),$(VERSION_HWREV),v0)
+
+HENI_IMAGE:=$(call qstrip_escape,$(CONFIG_HENI_IMAGE))
+HENI_IMAGE:=$(if $(HENI_IMAGE),$(HENI_IMAGE),image-dev)
+HENI_IMAGE_LEN:=$(shell echo -n $(HENI_IMAGE) | wc -m)
+HENI_IMAGE_SPACE:=$(shell expr $(HENI_IMAGE_LEN) - 2)
 
 define taint2sym
 $(CONFIG_$(firstword $(subst :, ,$(subst +,,$(subst -,,$(1))))))
@@ -86,6 +92,8 @@ VERSION_SED:=$(SED) 's,%U,$(VERSION_REPO),g' \
 	-e 's,%t,$(VERSION_TAINTS),g' \
 	-e 's,%M,$(VERSION_MANUFACTURER),g' \
 	-e 's,%P,$(VERSION_PRODUCT),g' \
-	-e 's,%h,$(VERSION_HWREV),g'
+	-e 's,%h,$(VERSION_HWREV),g' \
+	-e 's,%I \{$(HENI_IMAGE_SPACE)\},$(HENI_IMAGE),g' \
+	-e 's,%I,$(HENI_IMAGE),g'
 
 VERSION_SED_SCRIPT:=$(subst '\'','\'\\\\\'\'',$(VERSION_SED))

@@ -144,6 +144,15 @@ menuconfig VERSIONOPT
 
 if VERSIONOPT
 
+	config HENI_IMAGE
+		string
+		prompt "HENI image version"
+		default "image-dev"
+		help
+			This is the HENI image version.
+			Should be the same as in <heni-git>/software/supervisor/images/.
+			If unspecified, it defaults to image-dev.
+
 	config VERSION_DIST
 		string
 		prompt "Release distribution"

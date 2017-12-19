@@ -30,7 +30,15 @@ If so, restore previous version from repository:
 
 $ git checkout .config
 
-5. Build image
+5. Set image version
+
+Edit manually CONFIG_HENI_IMAGE in `.config` or use `make menuconfig` (Image configuration -> Version configuration options -> HENI image version).
+
+Then clean base-files package:
+
+$ make package/base-files/clean
+
+6. Build image
 
 $ make
 
@@ -38,7 +46,7 @@ First build involves preparing cross-compiler and other tools and is quite
 lengthy. Subsequent builds should take no more than a few minutes.
 This should create the image in build_dir/target-mipsel_24kec+dsp_uClibc-0.9.33.2/linux-ramips_rt305x/openwrt-ramips-rt305x-olinuxino-rt5350f-squashfs-sysupgrade.bin
 
-6. Upload image to the device
+7. Upload image to the device
 
 Using heni-cli, e.g.:
 
