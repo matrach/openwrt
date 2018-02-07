@@ -4,6 +4,8 @@ This is the buildsystem for the OpenWrt Linux distribution for HENI's CherryMote
 
 *Caution, the openwrt directory easily grows to 7-8GB*
 
+Ubuntu 16.04 LTS is recommended.
+
 1. Clone HENI openwrt fork from GitHub
 
 $ git clone https://github.com/heni-project/openwrt.git -b cherrymote
