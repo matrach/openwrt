@@ -1,0 +1,31 @@
+#!/bin/ash
+
+USER="user"
+
+if [ "${ACTION}" = "add" ]; then
+    sleep 1; # Time to make sda visible in /dev
+    
+    if ls /dev | grep -q sd ; then
+        sdxx=$(ls /dev | grep sd...*)   
+        if [ ! -d "/home" ]; then               
+            mkdir /home                         
+        fi   
+        mount -t ext4 /dev/$sdxx /home &> /dev/null || \
+        (echo -e "y" | (mkfs.ext4 /dev/$sdxx); mount -t ext4 /dev/$sdxx /home)
+
+        if [ ! -d "/home/$USER" ]; then
+            rm -rf /home/*
+            rm -rf /home/.* 2> /dev/null
+            mkdir /home/$USER                                                     
+            chown $USER /home/$USER                                               
+        fi
+	    if [ ! -d "/home/$USER/.ssh" ]; then
+            mkdir /home/$USER/.ssh                                                
+            chown $USER /home/$USER/.ssh                                          
+        fi  
+        if [ ! -f "/home/$USER/.ssh/authorized_keys" ]; then
+            cp /etc/dropbear/authorized_keys /home/user/.ssh/.                    
+            chown $USER /home/$USER/.ssh/authorized_keys
+        fi
+    fi	
+fi
