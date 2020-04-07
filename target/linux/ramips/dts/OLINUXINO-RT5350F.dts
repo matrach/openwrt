@@ -111,11 +111,13 @@
 
           vled1 {
             gpio-export,name = "vled1";
+            gpio-export,direction_may_change; /* The GPIO can be also used as a VButton. */
             gpios = <&gpio0 11 0>;
           };
 
           vled2 {
             gpio-export,name = "vled2";
+            gpio-export,direction_may_change; /* The GPIO can be also used as a VButton. */
             gpios = <&gpio0 13 0>;
           };
 
